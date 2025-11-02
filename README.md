@@ -170,11 +170,11 @@ tests/
 
 3. Gestión de tokens OAuth:
 
-Generación automática al primer uso
+- Generación automática al primer uso
 
-Almacenamiento en caché con tiempo de expiración
+- Almacenamiento en caché con tiempo de expiración
 
-Regeneración automática si la API devuelve 401
+- Regeneración automática si la API devuelve 401
 
 4. Base de datos:
    Todos los datos se obtienen en tiempo real de la API de Twitch. Se usa SQLite solo para simplificar la configuración de Laravel.
@@ -184,24 +184,24 @@ Regeneración automática si la API devuelve 401
 
 6. Testing:
 
-Tests unitarios para TwitchService
+- Tests unitarios para TwitchService
 
-Tests de feature para AnalyticsController
+- Tests de feature para AnalyticsController
 
-Uso de mocks para simular la API de Twitch
+- Uso de mocks para simular la API de Twitch
 
 7. Documentación:
 Documentación interactiva generada con OpenAPI.
 
 # Hipótesis y decisiones sobre el enunciado
 
-Ruta de endpoints: /api/analytics/user para mejor organización según Laravel.
+- Ruta de endpoints: /api/analytics/user para mejor organización según Laravel.
 
-Formato de respuestas: JSON.
+- Formato de respuestas: JSON.
 
-Regeneración de tokens: Automática.
+- Regeneración de tokens: Automática.
 
-Número de streams por defecto: 20 (ajustable en el servicio).
+- Número de streams por defecto: 20 (ajustable en el servicio).
 
 ## Contacto
 
