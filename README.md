@@ -106,12 +106,12 @@ curl "http://localhost:8000/api/analytics/streams"
 
 Errores posibles: 401 Unauthorized, 500 Internal Server Error
 
-## 🧭 Documentación API
+## 🧭 Documentación API (OpenAPI)
 
 La documentación interactiva está disponible en:  
 👉 [http://localhost:8000/api/docs.html](http://localhost:8000/api/docs.html)
 
-Esta interfaz permite explorar y probar los endpoints de la API de forma sencilla, ver los parámetros disponibles y visualizar las respuestas en tiempo real.
+Esta interfaz permite explorar y probar los endpoints de la API de forma sencilla, ver los parámetros disponibles y visualizar las respuestas en tiempo real. se necesita el servidor en ejecución.
 
 ---
 
