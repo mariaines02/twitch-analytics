@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'twitch' => [
+        'client_id' => env('TWITCH_CLIENT_ID'),
+        'client_secret' => env('TWITCH_CLIENT_SECRET'),
+        'token_url' => env('TWITCH_TOKEN_URL', 'https://id.twitch.tv/oauth2/token'),
+        'api_url' => env('TWITCH_API_URL', 'https://api.twitch.tv/helix'),
+    ],
+
 ];

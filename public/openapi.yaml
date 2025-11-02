@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Twitch Analytics API
+  version: "1.0.0"
+  description: "API para obtener datos de usuarios y streams desde Twitch."
+  contact:
+    email: mariahaddad@hotmail.fr
+
+servers:
+  - url: http://localhost:8000
+    description: Local dev
+
+paths:
+  /api/analytics/user:
+    get:
+      summary: Obtener información de un usuario por su ID
+      operationId: getUserById
+      tags:
+        - Usuarios
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: El ID del usuario de Twitch.
+          schema:
+            type: string
+          example: "44322889"
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: "44322889"
+                login: "dallas"
+                display_name: "dallas"
+                type: "staff"
+                broadcaster_type: ""
+                description: "Just a gamer playing games and chatting..."
+                profile_image_url: "https://static-cdn.jtvnw.net/jtv_user_pictures/dallas-profile_image.png"
+                offline_image_url: "https://static-cdn.jtvnw.net/jtv_user_pictures/dallas-channel_offline_image.png"
+                view_count: 191836881
+                created_at: "2013-06-03T19:12:02Z"
+        "400":
+          description: Parámetro 'id' inválido o faltante.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Invalid or missing 'id' parameter."
+        "401":
+          description: Token de acceso inválido o expirado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Unauthorized. Twitch access token is invalid or has expired."
+        "404":
+          description: Usuario no encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "User not found."
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Internal server error."
+
+  /api/analytics/streams:
+    get:
+      summary: Obtener streams en vivo
+      operationId: getLiveStreams
+      tags:
+        - Streams
+      responses:
+        "200":
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Stream"
+              example:
+                - title: "⛏️ CRAFTATTACK TAG 8 - ES GEHT WEITER ⛏️"
+                  user_name: "Papaplatte"
+                - title: "[DROPS ON] BIG DAY HUGE DRAMA NEW BIG NEWS AND GAMES"
+                  user_name: "zackrawrr"
+                - title: "Playing some games with viewers!"
+                  user_name: "StreamerExample"
+        "401":
+          description: Token de acceso inválido o expirado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Unauthorized. Twitch access token is invalid or has expired."
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Internal server error."
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID del usuario
+          example: "44322889"
+        login:
+          type: string
+          description: Nombre de usuario (login)
+          example: "dallas"
+        display_name:
+          type: string
+          description: Nombre para mostrar
+          example: "dallas"
+        type:
+          type: string
+          description: Tipo de usuario (ej. 'staff')
+          example: "staff"
+        broadcaster_type:
+          type: string
+          description: Tipo de broadcaster (ej. 'partner', 'affiliate')
+          example: "partner"
+        description:
+          type: string
+          description: Descripción del perfil
+          example: "Just a gamer playing games and chatting..."
+        profile_image_url:
+          type: string
+          format: uri
+          description: URL de la imagen de perfil
+          example: "https://static-cdn.jtvnw.net/jtv_user_pictures/dallas-profile_image.png"
+        offline_image_url:
+          type: string
+          format: uri
+          description: URL de la imagen offline
+          example: "https://static-cdn.jtvnw.net/jtv_user_pictures/dallas-channel_offline_image.png"
+        view_count:
+          type: integer
+          format: int64
+          description: Número total de vistas
+          example: 191836881
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación de la cuenta
+          example: "2013-06-03T19:12:02Z"
+      required:
+        - id
+        - login
+        - display_name
+
+    Stream:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del stream
+          example: "⛏️ CRAFTATTACK TAG 8 - ES GEHT WEITER ⛏️"
+        user_name:
+          type: string
+          description: Nombre de usuario del streamer
+          example: "Papaplatte"
+      required:
+        - title
+        - user_name
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Mensaje de error
+          example: "Invalid or missing 'id' parameter."
+      required:
+        - error

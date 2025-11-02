@@ -1,59 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Twitch Analytics API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST para consultar información de usuarios y streams en vivo de Twitch.
 
-## About Laravel
+## Requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.3.2
+- Composer 2.6.6
+- Laravel 5.4.0
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalación
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+# Clonar repositorio
+git clone git@github.com:mariaines02/twitch-analytics.git
+cd twitch-analytics
 
-## Learning Laravel
+# Instalar dependencias
+composer install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# Configurar entorno
+cp .env.example .env
+php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Iniciar servidor
+php artisan serve
+```
 
-## Laravel Sponsors
+## Configuración
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Edita `.env` con tus credenciales de Twitch:
 
-### Premium Partners
+```env
+TWITCH_CLIENT_ID=######
+TWITCH_CLIENT_SECRET=#####
+TWITCH_TOKEN_URL=https://id.twitch.tv/oauth2/token
+TWITCH_API_URL=https://api.twitch.tv/helix
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Endpoints
 
-## Contributing
+### Obtener información de usuario
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+GET /api/analytics/user?id={user_id}
+```
 
-## Code of Conduct
+**Ejemplo:**
+```bash
+curl "http://localhost:8000/api/analytics/user?id=44322889"
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Respuesta:**
+```json
+{
+   "id": "44322889",
+  "login": "dallas",
+  "display_name": "dallas",
+  "type": "staff",
+  "broadcaster_type": "",
+  "description": "Just a gamer playing games and chatting...",
+  "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
+  "offline_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
+  "view_count": 191836881,
+  "created_at": "2013-06-03T19:12:02Z"
+}
+```
+400 Bad Request – Falta o es inválido el parámetro id
 
-## Security Vulnerabilities
+404 Not Found – Usuario no encontrado
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+401 Unauthorized – Token de Twitch inválido o expirado
 
-## License
+500 Internal Server Error – Error interno del servidor
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### Streams en vivo
+
+GET /api/analytics/streams
+
+**Ejemplo:**
+```bash
+curl "http://localhost:8000/api/analytics/streams"
+```
+
+**Respuesta:**
+```json
+[
+  {
+    "title": "⛏️ CRAFTATTACK TAG 8 - ES GEHT WEITER ⛏️",
+    "user_name": "Papaplatte"
+  },
+  {
+    "title": "[DROPS ON] BIG DAY HUGE DRAMA NEW BIG NEWS AND GAMES",
+    "user_name": "zackrawrr"
+  }
+]
+```
+Errores posibles: 401 Unauthorized, 500 Internal Server Error
+
+
+## Documentación API
+
+Documentación interactiva disponible en: `http://localhost:8000/api/docs.html`
+
+## Tests
+
+```bash
+php artisan test tests/Feature/AnalyticsControllerTest.php
+php artisan test tests/Unit/TwitchServiceTest.php
+```
+
+
+## Tests de endpoints
+```bash
+curl "http://localhost:8000/api/analytics/user?id=44322889"
+curl -i "http://localhost:8000/api/analytics/user?id="
+curl -i "http://localhost:8000/api/analytics/user?id=111111"
+
+```
+## Arquitectura
+
+```
+app/
+├── Exceptions/
+│   └── TwitchApiException.php # Manejo centralizado de errores de Twitch
+├── Http/
+│   └── Controllers/
+│       └── AnalyticsController.php # Endpoints de la API
+└── Services/
+    └── TwitchService.php # Lógica de comunicación con Twitch
+
+config/
+└── services.php # Configuración de servicios externos
+
+routes/
+└── api.php # Definición de rutas
+
+tests/
+├── Feature/
+│   └── AnalyticsControllerTest.php # Tests de endpoints
+└── Unit/
+    └── TwitchServiceTest.php # Tests del servicio
+
+```
+
+## Características
+
+- Gestión automática de tokens OAuth
+- Sin base de datos (datos en tiempo real)
+- Manejo de errores personalizado
+- Suite completa de tests
+- Documentación OpenAPI
+
+## Contacto
+
+**María Inés Haddad**  
+📧 mariahaddad@hotmail.fr  
+🔗 [GitHub](https://github.com/mariaines02)
