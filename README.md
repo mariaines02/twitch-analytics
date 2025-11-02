@@ -184,9 +184,9 @@ tests/
 ## Características
 
 -   Gestión automática de tokens OAuth
--   Sin base de datos (datos en tiempo real)
+-   Datos en tiempo real
 -   Manejo de errores personalizado
--   Suite completa de tests
+-   Suite de tests
 -   Documentación OpenAPI
 
 # Decisiones técnicas principales
