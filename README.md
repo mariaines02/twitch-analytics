@@ -120,13 +120,13 @@ Esta interfaz permite explorar y probar los endpoints de la API de forma sencill
 **Ejemplo de request**
 
 <p align="center">
-  <img src="./images/git_request_user.PNG" alt="Ejemplo de request de usuario" width="700">
+  <img src="./public/images/git_request_user.PNG" alt="Ejemplo de request de usuario" width="700">
 </p>
 
 **Ejemplo de respuesta**
 
 <p align="center">
-  <img src="./images/git_response_user.PNG" alt="Ejemplo de respuesta de usuario" width="700">
+  <img src="./public/images/git_response_user.PNG" alt="Ejemplo de respuesta de usuario" width="700">
 </p>
 
 ---
@@ -136,7 +136,7 @@ Esta interfaz permite explorar y probar los endpoints de la API de forma sencill
 **Ejemplo de respuesta**
 
 <p align="center">
-  <img src="./images/git_response_stream.PNG" alt="Ejemplo de respuesta de streams" width="700">
+  <img src="./public/images/git_response_stream.PNG" alt="Ejemplo de respuesta de streams" width="700">
 </p>
 
 ## Tests
