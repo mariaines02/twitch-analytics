@@ -19,8 +19,11 @@ cd twitch-analytics
 composer install
 
 # Configurar entorno
-cp .env.example .env
+copy .env.example .env
 php artisan key:generate
+
+# Crear la base de datos
+php artisan migrate
 
 # Iniciar servidor
 php artisan serve
