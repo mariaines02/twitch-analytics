@@ -4,9 +4,9 @@ API REST para consultar información de usuarios y streams en vivo de Twitch.
 
 ## Requisitos
 
-- PHP 8.3.2
-- Composer 2.6.6
-- Laravel 5.4.0
+-   PHP 8.3.2
+-   Composer 2.6.6
+-   Laravel 5.4.0
 
 ## Instalación
 
@@ -49,25 +49,28 @@ GET /api/analytics/user?id={user_id}
 ```
 
 **Ejemplo:**
+
 ```bash
 curl "http://localhost:8000/api/analytics/user?id=44322889"
 ```
 
 **Respuesta:**
+
 ```json
 {
-   "id": "44322889",
-  "login": "dallas",
-  "display_name": "dallas",
-  "type": "staff",
-  "broadcaster_type": "",
-  "description": "Just a gamer playing games and chatting...",
-  "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
-  "offline_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
-  "view_count": 191836881,
-  "created_at": "2013-06-03T19:12:02Z"
+    "id": "44322889",
+    "login": "dallas",
+    "display_name": "dallas",
+    "type": "staff",
+    "broadcaster_type": "",
+    "description": "Just a gamer playing games and chatting...",
+    "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
+    "offline_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/...",
+    "view_count": 191836881,
+    "created_at": "2013-06-03T19:12:02Z"
 }
 ```
+
 400 Bad Request – Falta o es inválido el parámetro id
 
 404 Not Found – Usuario no encontrado
@@ -76,31 +79,32 @@ curl "http://localhost:8000/api/analytics/user?id=44322889"
 
 500 Internal Server Error – Error interno del servidor
 
-
 ### Streams en vivo
 
 GET /api/analytics/streams
 
 **Ejemplo:**
+
 ```bash
 curl "http://localhost:8000/api/analytics/streams"
 ```
 
 **Respuesta:**
+
 ```json
 [
-  {
-    "title": "⛏️ CRAFTATTACK TAG 8 - ES GEHT WEITER ⛏️",
-    "user_name": "Papaplatte"
-  },
-  {
-    "title": "[DROPS ON] BIG DAY HUGE DRAMA NEW BIG NEWS AND GAMES",
-    "user_name": "zackrawrr"
-  }
+    {
+        "title": "⛏️ CRAFTATTACK TAG 8 - ES GEHT WEITER ⛏️",
+        "user_name": "Papaplatte"
+    },
+    {
+        "title": "[DROPS ON] BIG DAY HUGE DRAMA NEW BIG NEWS AND GAMES",
+        "user_name": "zackrawrr"
+    }
 ]
 ```
-Errores posibles: 401 Unauthorized, 500 Internal Server Error
 
+Errores posibles: 401 Unauthorized, 500 Internal Server Error
 
 ## Documentación API
 
@@ -113,14 +117,15 @@ php artisan test tests/Feature/AnalyticsControllerTest.php
 php artisan test tests/Unit/TwitchServiceTest.php
 ```
 
-
 ## Tests de endpoints
+
 ```bash
 curl "http://localhost:8000/api/analytics/user?id=44322889"
 curl -i "http://localhost:8000/api/analytics/user?id="
 curl -i "http://localhost:8000/api/analytics/user?id=111111"
 
 ```
+
 ## Arquitectura
 
 ```
@@ -149,11 +154,54 @@ tests/
 
 ## Características
 
-- Gestión automática de tokens OAuth
-- Sin base de datos (datos en tiempo real)
-- Manejo de errores personalizado
-- Suite completa de tests
-- Documentación OpenAPI
+-   Gestión automática de tokens OAuth
+-   Sin base de datos (datos en tiempo real)
+-   Manejo de errores personalizado
+-   Suite completa de tests
+-   Documentación OpenAPI
+
+# Decisiones técnicas principales
+
+1. Lenguaje y framework:
+   Laravel se eligió por familiaridad y facilidad de manejo, aunque podría implementarse con Node.js u otras tecnologías.
+
+2. Servicio dedicado (TwitchService):
+   Toda la lógica de interacción con Twitch está centralizada aquí para facilitar mantenimiento y testing.
+
+3. Gestión de tokens OAuth:
+
+Generación automática al primer uso
+
+Almacenamiento en caché con tiempo de expiración
+
+Regeneración automática si la API devuelve 401
+
+4. Base de datos:
+   Todos los datos se obtienen en tiempo real de la API de Twitch. Se usa SQLite solo para simplificar la configuración de Laravel.
+
+5. Validación de entrada:
+   Se valida el parámetro id usando Laravel Validator, con mensajes claros en caso de error.
+
+6. Testing:
+
+Tests unitarios para TwitchService
+
+Tests de feature para AnalyticsController
+
+Uso de mocks para simular la API de Twitch
+
+7. Documentación:
+Documentación interactiva generada con OpenAPI.
+
+# Hipótesis y decisiones sobre el enunciado
+
+Ruta de endpoints: /api/analytics/user para mejor organización según Laravel.
+
+Formato de respuestas: JSON.
+
+Regeneración de tokens: Automática.
+
+Número de streams por defecto: 20 (ajustable en el servicio).
 
 ## Contacto
 
