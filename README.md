@@ -222,16 +222,6 @@ tests/
 7. Documentación:
    Documentación interactiva generada con OpenAPI.
 
-# Hipótesis y decisiones sobre el enunciado
-
--   Ruta de endpoints: /api/analytics/user para mejor organización según Laravel.
-
--   Formato de respuestas: JSON.
-
--   Regeneración de tokens: Automática.
-
--   Número de streams por defecto: 20 (ajustable en el servicio).
-
 ## Contacto
 
 **María Inés Haddad**  
