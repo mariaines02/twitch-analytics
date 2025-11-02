@@ -106,10 +106,38 @@ curl "http://localhost:8000/api/analytics/streams"
 
 Errores posibles: 401 Unauthorized, 500 Internal Server Error
 
-## Documentación API
+## 🧭 Documentación API
 
-Documentación interactiva disponible en: `http://localhost:8000/api/docs.html`
-$<p align="center"> <img src="public/images/git_request_user.PNG" alt="Ejemplo de request de usuario" width="650"> </p> <p align="center"> <img src="public/images/git_response_user.PNG" alt="Ejemplo de respuesta de usuario" width="650"> </p> <p align="center"> <img src="public/images/git_response_stream.PNG" alt="Ejemplo de respuesta de streams" width="650"> </p>
+La documentación interactiva está disponible en:  
+👉 [http://localhost:8000/api/docs.html](http://localhost:8000/api/docs.html)
+
+Esta interfaz permite explorar y probar los endpoints de la API de forma sencilla, ver los parámetros disponibles y visualizar las respuestas en tiempo real.
+
+---
+
+### 👤 Usuarios
+
+**Ejemplo de request**
+
+<p align="center">
+  <img src="./images/git_request_user.png" alt="Ejemplo de request de usuario" width="700">
+</p>
+
+**Ejemplo de respuesta**
+
+<p align="center">
+  <img src="./images/git_response_user.png" alt="Ejemplo de respuesta de usuario" width="700">
+</p>
+
+---
+
+### 🎥 Streams en vivo
+
+**Ejemplo de respuesta**
+
+<p align="center">
+  <img src="./images/git_response_stream.png" alt="Ejemplo de respuesta de streams" width="700">
+</p>
 
 ## Tests
 
