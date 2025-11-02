@@ -2,7 +2,7 @@
 
 API REST para consultar información de usuarios y streams en vivo de Twitch.
 
-## Requisitos
+## Entorno de Desarollo
 
 -   PHP 8.3.2
 -   Composer 2.6.6
