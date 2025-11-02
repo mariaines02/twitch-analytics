@@ -222,6 +222,8 @@ tests/
 7. Documentación:
    Documentación interactiva generada con OpenAPI.
 
+8. Número de streams por defecto: 20 (ajustable en el servicio).
+
 ## Contacto
 
 **María Inés Haddad**  
